@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="potential hedge">
+  <!-- seven pointy-top hexagons in the logo's greens -->
+  <defs>
+    <path id="h" d="M0,-12 L10.4,-6 L10.4,6 L0,12 L-10.4,6 L-10.4,-6 Z"/>
+  </defs>
+  <use href="#h" x="32" y="32" fill="rgb(27,113,55)"/>
+  <use href="#h" x="21.6" y="14" fill="rgb(64,142,58)"/>
+  <use href="#h" x="42.4" y="14" fill="rgb(90,157,59)"/>
+  <use href="#h" x="11.2" y="32" fill="rgb(45,130,58)"/>
+  <use href="#h" x="52.8" y="32" fill="rgb(18,99,52)"/>
+  <use href="#h" x="21.6" y="50" fill="rgb(11,85,45)"/>
+  <use href="#h" x="42.4" y="50" fill="rgb(45,130,58)"/>
+</svg>

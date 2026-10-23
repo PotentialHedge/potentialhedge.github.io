@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>potential hedge</title>
+  <meta name="description" content="potential hedge — a collective.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/lmroman17-regular.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* Latin Modern (GUST Font License) for the wordmark only, subset to Latin from the OTF release */
+    @font-face {
+      font-family: "Latin Modern Roman Display";
+      src: local("LM Roman 17"), local("LMRoman17-Regular"), url("fonts/lmroman17-regular.woff") format("woff");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #f7f5ef;
+      --ink: #14231a;
+      --muted: #66705f;
+      --rule: #e1ddd1;
+      /* the logo's hedge palette, dark to light */
+      --g0: rgb(8,72,42);
+      --g1: rgb(11,85,45);
+      --g2: rgb(18,99,52);
+      --g3: rgb(27,113,55);
+      --g4: rgb(45,130,58);
+      --g5: rgb(64,142,58);
+      --g6: rgb(90,157,59);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "STIX Two Text", "Times New Roman", serif;
+      font-size: 1.0625rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 16px;
+    }
+
+    header {
+      text-align: center;
+      padding: 64px 0 48px;
+    }
+
+    .logo {
+      width: min(320px, 80vw);
+      height: auto;
+      display: block;
+      margin: 0 auto 24px;
+    }
+
+    h1 {
+      font-family: "Latin Modern Roman Display", "Times New Roman", serif;
+      font-weight: 400;
+      font-size: clamp(1.75rem, 5vw, 2.25rem);
+      margin: 0;
+    }
+
+    .tagline {
+      color: var(--muted);
+      margin: 6px 0 0;
+      font-style: italic;
+    }
+
+    main {
+      width: 100%;
+      max-width: 580px;
+      flex: 1;
+    }
+
+    .repos {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      counter-reset: eq;
+      border-top: 1px solid var(--rule);
+    }
+
+    .repos li {
+      counter-increment: eq;
+      position: relative;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* numbered like equations: (1), (2), … */
+    .repos li::after {
+      content: "(" counter(eq) ")";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .repos a {
+      display: block;
+      padding: 20px 48px;
+      color: inherit;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .repo-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--g2);
+    }
+
+    .repo-name::before {
+      content: "";
+      width: 11px;
+      height: 12.7px;
+      background: var(--g4);
+      clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+      transition: background .15s;
+    }
+
+    .repos a:hover .repo-name,
+    .repos a:focus-visible .repo-name {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+    }
+
+    .repos a:hover .repo-name::before,
+    .repos a:focus-visible .repo-name::before { background: var(--g6); }
+
+    .repos a:focus-visible { outline: 2px solid var(--g5); outline-offset: -2px; }
+
+    .repo-desc {
+      margin: 4px 0 0;
+    }
+
+    .repo-meta {
+      margin: 8px 0 0;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: .75rem;
+      color: var(--muted);
+    }
+
+    .status {
+      text-align: center;
+      color: var(--muted);
+      font-style: italic;
+      margin: 24px 0;
+    }
+
+    .status a { color: var(--g3); }
+
+    footer {
+      align-self: stretch;
+      margin: 80px -16px 0;
+      text-align: center;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: .8rem;
+    }
+
+    footer a { color: var(--muted); }
+
+    .hedgerow {
+      display: block;
+      width: 100%;
+      height: 72px;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img class="logo" src="logo.svg" alt="p(hedge)">
+    <h1>potential hedge</h1>
+    <p class="tagline">a collective</p>
+  </header>
+
+  <main>
+    <ul class="repos" id="repos" aria-live="polite"></ul>
+    <p class="status" id="status">Trimming the hedge…</p>
+  </main>
+
+  <footer>
+    <a href="https://github.com/PotentialHedge">github.com/PotentialHedge</a>
+    <svg class="hedgerow" id="hedgerow" aria-hidden="true" preserveAspectRatio="xMidYMax slice"></svg>
+  </footer>
+
+  <script>
+    const ORG = "PotentialHedge";
+    // only repos tagged with this GitHub topic are listed
+    const TOPIC = "hedge";
+    const list = document.getElementById("repos");
+    const status = document.getElementById("status");
+
+    // A row of hexagon tiles along the bottom, same geometry and greens as the logo.
+    (function drawHedgerow() {
+      const svg = document.getElementById("hedgerow");
+      const greens = ["--g1", "--g2", "--g2", "--g3", "--g3", "--g3", "--g4", "--g4", "--g5", "--g6"]
+        .map((v) => `var(${v})`);
+      const r = 14, w = r * Math.sqrt(3), rowH = r * 1.5;
+      const cols = 120, rows = 4;
+      const width = cols * w, height = rows * rowH + r * 0.5;
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+      // a fresh hedge on every page load
+      const rand = Math.random;
+
+      let paths = "";
+      // one extra row below the viewBox fills the gaps between the bottom row's points
+      for (let row = 0; row <= rows; row++) {
+        for (let col = -1; col < cols + 1; col++) {
+          // let the top row grow unevenly, like an untrimmed hedge
+          if (row === 0 && rand() < 0.45) continue;
+          const cx = col * w + (row % 2 ? w / 2 : 0);
+          const cy = r + row * rowH;
+          const pts = [0, 1, 2, 3, 4, 5].map((i) => {
+            const a = Math.PI / 3 * i - Math.PI / 2;
+            return `${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`;
+          }).join(" ");
+          // darker towards the ground
+          const shade = Math.max(0, Math.floor(rand() * greens.length) - row);
+          // a same-colour stroke closes the anti-aliasing seams between tiles
+          paths += `<polygon points="${pts}" style="fill:${greens[shade]};stroke:${greens[shade]};stroke-width:1"/>`;
+        }
+      }
+      svg.innerHTML = paths;
+    })();
+
+    const el = (tag, cls, text) => {
+      const node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text) node.textContent = text;
+      return node;
+    };
+
+    fetch(`https://api.github.com/orgs/${ORG}/repos?per_page=100&sort=pushed`)
+      .then((res) => {
+        if (!res.ok) throw new Error(res.status);
+        return res.json();
+      })
+      .then((repos) => {
+        repos = repos.filter((r) => !r.archived && (r.topics || []).includes(TOPIC));
+        if (repos.length === 0) {
+          status.textContent = "Nothing planted yet.";
+          return;
+        }
+        status.remove();
+        for (const repo of repos) {
+          const a = el("a");
+          a.href = repo.html_url;
+          a.append(el("span", "repo-name", repo.name));
+          if (repo.description) a.append(el("p", "repo-desc", repo.description));
+          const meta = [repo.language, repo.stargazers_count ? `★ ${repo.stargazers_count}` : null]
+            .filter(Boolean).join("  ·  ");
+          if (meta) a.append(el("p", "repo-meta", meta));
+          const li = el("li");
+          li.append(a);
+          list.append(li);
+        }
+      })
+      .catch(() => {
+        status.innerHTML = `Couldn't reach GitHub — <a href="https://github.com/orgs/${ORG}/repositories">see the repositories there</a>.`;
+      });
+  </script>
+</body>
+</html>
