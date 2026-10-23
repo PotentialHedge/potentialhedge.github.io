@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>potential hedge</title>
   <meta name="description" content="potential hedge — a collective.">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="fonts/lmroman17-regular.woff" as="font" type="font/woff" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,6 +40,10 @@
     * { box-sizing: border-box; }
 
     html, body { margin: 0; }
+
+    /* iOS paints the root background into the over-scroll area: cream above the page, hedge below */
+    html { background: var(--bg); }
+    html.past-hedge { background: var(--g1); }
 
     body {
       background: var(--bg);
@@ -239,6 +245,18 @@
         }
       }
       svg.innerHTML = paths;
+    })();
+
+    // past the halfway point an over-scroll can only reveal the bottom, so colour it like the hedge
+    (function groundBelowHedge() {
+      const root = document.documentElement;
+      const update = () => {
+        const maxScroll = Math.max(0, root.scrollHeight - innerHeight);
+        root.classList.toggle("past-hedge", scrollY > maxScroll / 2);
+      };
+      addEventListener("scroll", update, { passive: true });
+      addEventListener("resize", update);
+      update();
     })();
 
     const el = (tag, cls, text) => {
