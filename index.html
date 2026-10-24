@@ -283,9 +283,9 @@
           a.href = repo.html_url;
           a.append(el("span", "repo-name", repo.name));
           if (repo.description) a.append(el("p", "repo-desc", repo.description));
-          const meta = [repo.language, repo.stargazers_count ? `★ ${repo.stargazers_count}` : null]
-            .filter(Boolean).join("  ·  ");
-          if (meta) a.append(el("p", "repo-meta", meta));
+          if (repo.stargazers_count) {
+            a.append(el("p", "repo-meta", `★ ${repo.stargazers_count}`));
+          }
           const li = el("li");
           li.append(a);
           list.append(li);
